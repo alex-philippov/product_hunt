@@ -4,13 +4,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
-
 import com.test.producthunt.R
 import com.test.producthunt.domain.Product
 import com.test.producthunt.domain.Topic
@@ -48,7 +45,6 @@ class ProductsFragment : Fragment() {
         rv_products.adapter = adapter
 
         viewModel.productsStore.observe(this) {
-            Log.d("HUI DEBUG", it.toString())
             when (it) {
                 is Lce.Success -> successProducts(it.data)
                 is Lce.Error -> error()
@@ -56,7 +52,6 @@ class ProductsFragment : Fragment() {
             }
         }
         viewModel.topicsStore.observe(this) {
-            Log.d("HUI DEBUG", it.toString())
             when (it) {
                 is Lce.Success -> successTopics(it.data)
                 is Lce.Error -> error()
