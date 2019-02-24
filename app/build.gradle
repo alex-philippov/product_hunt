@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    defaultConfig {
+        applicationId "com.test.producthunt"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "PRODUCT_HUNT_BASE_URL", "\"${product_hunt_base_url}\""
+        buildConfigField "String", "PRODUCT_HUNT_ACCESS_TOKEN", "\"${product_hunt_access_token}\""
+    }
+    signingConfigs {
+        release {
+            keyAlias 'test-store'
+            keyPassword '1234567'
+            storeFile file('../test-store')
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+    }
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //SUPPORT
+    implementation "com.android.support:support-v4:$rootProject.supportVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+    implementation "com.android.support:support-core-ui:$rootProject.supportVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
+    implementation "com.android.support:design:$rootProject.supportVersion"
+
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    //CONSTRAINT
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintVersion"
+
+    //COROUTINES
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+
+    //DAGGER
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    //GLIDE
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
+    //RETROFIT
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$rootProject.retrofitCoroutinesVersion"
+
+    //implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
+    //RESULT
+
+    implementation "com.michael-bull.kotlin-result:kotlin-result:$rootProject.resultVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.testRunner"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoCore"
+}
+
+repositories {
+    maven { url = 'https://dl.bintray.com/michaelbull/maven' }
+}
